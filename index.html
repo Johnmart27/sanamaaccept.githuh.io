@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-family: "Poppins", sans-serif;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        position: relative;
+        scroll-behavior: smooth;
+        animation: bgPulse 10s ease-in-out infinite;
+    }
+
+    /* Background color transitions */
+    @keyframes bgPulse {
+        0% { background: radial-gradient(circle, #ff7aa2, #ff3d6b, #b3003f); }
+        50% { background: radial-gradient(circle, #ff9abb, #ff4d7a, #cc0048); }
+        100% { background: radial-gradient(circle, #ff7aa2, #ff3d6b, #b3003f); }
+    }
+
+    /* Floating hearts */
+    .heart {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: pink;
+        transform: rotate(45deg);
+        animation: floatUp 6s linear infinite;
+        opacity: 0.8;
+        cursor: pointer;
+    }
+
+    .heart:before,
+    .heart:after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: pink;
+        border-radius: 50%;
+    }
+
+    .heart:before { top: -12px; left: 0; }
+    .heart:after { left: -12px; top: 0; }
+
+    @keyframes floatUp {
+        from { transform: translateY(100vh) rotate(45deg); }
+        to   { transform: translateY(-100vh) rotate(45deg); }
+    }
+
+    /* Pop animation on tap */
+    @keyframes pop {
+        0%   { transform: scale(1) rotate(45deg); opacity: 1; }
+        100% { transform: scale(2.3) rotate(45deg); opacity: 0; }
+    }
+
+    #intro, #letter {
+        width: 85%;
+        max-width: 650px;
+        padding: 20px;
+        background: rgba(0,0,0,0.45);
+        border-radius: 18px;
+        backdrop-filter: blur(8px);
+        text-align: center;
+    }
+
+    #letter { 
+        display: none; 
+        overflow-y: auto;
+        max-height: 90vh;
+    }
+
+    input {
+        margin-top: 10px;
+        padding: 13px;
+        width: 90%;
+        border-radius: 12px;
+        font-size: 18px;
+        outline: none;
+        border: none;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 14px 30px;
+        background: #ffccd9;
+        color: #b3003f;
+        border: none;
+        border-radius: 12px;
+        font-size: 19px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    #message {
+        white-space: pre-wrap;
+        font-size: 18px;
+        line-height: 1.65;
+        text-align: left;
+    }
+
+    @media (max-width: 480px) {
+        #message {
+            font-size: 16px;
+            line-height: 1.55;
+        }
+        input, button {
+            font-size: 17px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Canvas for name-shaped hearts -->
+<canvas id="nameCanvas" width="400" height="150"
+    style="position:absolute; top:50%; left:50%;
+           transform:translate(-50%,-50%);
+           pointer-events:none; display:none;"></canvas>
+
+<script>
+// Generate floating hearts
+function createFloatingHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (5 + Math.random()*4) + "s";
+
+    h.addEventListener("click", () => {
+        if (navigator.vibrate) navigator.vibrate(40); // vibrate
+        h.style.animation = "pop 0.4s forwards";
+        setTimeout(() => h.remove(), 400);
+    });
+
+    document.body.appendChild(h);
+}
+
+for (let i = 0; i < 20; i++) createFloatingHeart();
+
+// burst of hearts when typing name
+function burstHearts() {
+    for (let i = 0; i < 12; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.style.left = (40 + Math.random()*20) + "vw";
+        h.style.top = "60vh";
+        h.style.animationDuration = (1.5 + Math.random()*1.5) + "s";
+
+        h.addEventListener("click", () => {
+            if (navigator.vibrate) navigator.vibrate(40); // vibrate
+            h.style.animation = "pop 0.4s forwards";
+            setTimeout(() => h.remove(), 400);
+        });
+
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), 3000);
+    }
+}
+</script>
+
+<div id="intro">
+    <h2>Hi! What's your name? ❤️</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <br>
+    <button id="enterBtn">Continue</button>
+</div>
+
+<div id="letter">
+    <h2 id="greet"></h2>
+    <p id="message"></p>
+</div>
+
+<audio id="bgm" src="phad_ilikeyouthemost_english.mp3" loop></audio>
+
+<script>
+// Activate burst while typing name
+document.getElementById("nameInput").addEventListener("input", burstHearts);
+
+const fullMessage = `
+
+
+You might be wondering why I send you this link. 
+
+That's because my heart has been saying something to me and it's been bothering me for a while na.
+
+
+Ummm... I hope this message finds you well.
+
+
+I wrote this letter because everytime I'm seeing you I get this feeling that would make my heart throb and I just can't stop thinking about you and how amazing you are from the way you dress walk and even the way you talk you might also be thinking why I'm doing this kind of thing out of the blue (ambot lang sad nganung nabuhat nako ni). May because sa bugso ng aking damdamin😂😂.
+
+But honestly I wrote this because I want to convey my feelings for you....
+
+
+So.
+Umm..
+
+Here goes everything I feel right now while writing this message..
+
+                        ✨❤️I LIKE YOU❤️✨
+
+Actually I've been going back and forth wether I have the courage to tell you this. And I figured out that the best thing I could do is to be honest with you..
+
+
+Honestly I just can't stop thinking about you every now and then even in my dream I sometimes dreamt about being with you.  
+
+That's  because I just can't stop thinking how amazing you are from the way you carry your self and the way you do anything beautifully because honestly you are more attractive than I thought.
+
+Honestly my feelings for you is more than that..
+
+
+So.. 
+Umm..
+
+Here goes nothing..
+
+Umm..
+
+So I actually like you for so many reasons.
+First and foremost (char), I like your personality, your vibe  and how you light up everything around you.
+
+I like you flaws, your imperfections (although I can't seem to find any) and the way the the perfect you. 😎
+Your style is flawless and especially your smile it just make everything better.💯
+What I mean is that every little moment with you means more that I could put into words. Your smile your laughter and the way you make everything lighter..❤️
+
+So here it is... I like you a lot(and when I say lot I mean it)maybe even love❤️❤️.So can I court you??
+No matter your answer I just want you to know that you are special to me you've filled my heart with love, joy, and specially warmth in ways that I never expected and for that I'm pretty gratefull. And I do think that you're standards are pretty high considering your beauty and I do know that I am not your type and I'm pretty that I'm not even going to hit 1porcent in your standards and I'm also guessing that there are just actually a lot of guys that confessed their love for you and I'm pretty sure that their much more close to your standards that I am but unlike them I only seek to convey this message to you so that I can rest easy knowing that I actually did my best and I actually have the courage to confess even though it's in this cowardly confession link hehe that's because I can't handle the tension if I will say it to you face to face I also send this link to you knowing that I would actually get rejected hehe but then again I only made this to convey my message to you it's okay naman that you're not feeling the same thing as me because I think that how love actually works.
+
+I'm guessing when you actually get to this part you would react something like yuck, cringe,
+Kaluod or something like that..
+
+
+I actually made this code to convey my feelings to you. Every line of it reflects what I'm feeling for you.
+
+But no pressure, okay?
+You don't have to feel the same way I do. And again  I just actually need to get this feeling out of my chest for my own peace of mind. I hope by the time you have finished reading this we could still talk to each other because  no matter the outcome I'll always love you....
+
+That's all..
+It's actually feels good to say everything I've felt for all these months.. That's all Take care.
+
+I hope we can still talk to each other but it would most probably awkward for me though HAHAHAHHAHAHAHAHAH.
+Thats all I would like to say goodnight and take care everyday.`;
+
+let i = 0;
+let speed = 32; // optimized for phone reading
+
+const msgBox = document.getElementById("message");
+const letterBox = document.getElementById("letter");
+const bgm = document.getElementById("bgm");
+
+// Auto-scroll
+function autoScroll() {
+    letterBox.scrollTop = letterBox.scrollHeight;
+}
+
+// Typewriter
+function typeWriter() {
+    if (i < fullMessage.length) {
+        msgBox.textContent += fullMessage.charAt(i);
+        i++;
+        autoScroll();
+        setTimeout(typeWriter, speed);
+    }
+}
+
+
+// ❤️ Hearts forming name
+function drawNameHearts(name) {
+    const canvas = document.getElementById("nameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.style.display = "block";
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.font = "bold 80px Poppins";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText(name, canvas.width/2, canvas.height/2 + 25);
+
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const points = [];
+
+    for (let y = 0; y < canvas.height; y += 8) {
+        for (let x = 0; x < canvas.width; x += 8) {
+            const index = (y * canvas.width + x)*4;
+            if (imageData.data[index+3] > 150) points.push({x,y});
+        }
+    }
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    let a = 0;
+    const interval = setInterval(() => {
+        if (a >= points.length) {
+            setTimeout(()=> canvas.style.display="none", 1800);
+            return clearInterval(interval);
+        }
+
+        const p = points[a];
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(45 * Math.PI/180);
+        ctx.fillStyle = "pink";
+        ctx.fillRect(0,0,6,6);
+        ctx.restore();
+
+        a+=3;
+    }, 5);
+}
+
+
+// MAIN BUTTON
+document.getElementById("enterBtn").addEventListener("click", () => {
+    const name = document.getElementById("nameInput").value.trim();
+    if (!name) return;
+
+    document.getElementById("intro").style.display = "none";
+    letterBox.style.display = "block";
+
+    document.getElementById("greet").textContent = "Hey " + name + "! ❤️";
+
+    bgm.volume = 0.55;
+    bgm.play().catch(() => {
+        document.body.addEventListener("click", () => {
+            bgm.play();
+        }, { once: true });
+    });
+
+    drawNameHearts(name); // NAME HEARTS ✨
+    typeWriter();
+});
+</script>
+
+</body>
+</html>
